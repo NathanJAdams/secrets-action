@@ -16,7 +16,7 @@ This GitHub Action enables you to import secrets from Infisical—whether hosted
 - Ensure your runner has network access to AWS STS API endpoints.
 
 ```yaml
-- uses: Infisical/secrets-action@v1.0.9
+- uses: Infisical/secrets-action@v1.0.16
   with:
     method: "aws-iam"
     identity-id: "24be0d94-b43a-41c4-812c-1e8654d9ce1e"
@@ -32,6 +32,7 @@ This GitHub Action enables you to import secrets from Infisical—whether hosted
 - Set `method` to oidc and configure the `identity-id` input parameter. Optionally, customize the JWT's aud field by setting the `oidc-audience` input parameter.
 - For debugging OIDC configuration issues, you can use GitHub's [actions-oidc-debugger](https://github.com/github/actions-oidc-debugger) tool. This tool helps you inspect the JWT claims and verify they match your configuration.
 - Add `id-token: write` to the permissions for your workflow:
+
 ```
 permissions:
   id-token: write
@@ -53,7 +54,7 @@ With this action, you can use your Infisical secrets in two ways: as environment
 Secrets are injected as environment variables and can be referenced by subsequent workflow steps.
 
 ```yaml
-- uses: Infisical/secrets-action@v1.0.9
+- uses: Infisical/secrets-action@v1.0.16
   with:
     method: "oidc"
     identity-id: "24be0d94-b43a-41c4-812c-1e8654d9ce1e"
@@ -67,7 +68,7 @@ Secrets are injected as environment variables and can be referenced by subsequen
 Exports secrets to a file in your `GITHUB_WORKSPACE`, useful for applications that read from `.env` files.
 
 ```yaml
-- uses: Infisical/secrets-action@v1.0.9
+- uses: Infisical/secrets-action@v1.0.16
   with:
     method: "oidc"
     identity-id: "24be0d94-b43a-41c4-812c-1e8654d9ce1e"
@@ -118,7 +119,7 @@ steps:
 
 ### `domain`
 
-**Optional**. Infisical URL. Defaults to https://app.infisical.com. If you're using Infisical EU (https://eu.infisical.com) or a self-hosted/dedicated instance, you will need to set the appropriate value for this field.
+**Optional**. Infisical URL. Defaults to <https://app.infisical.com>. If you're using Infisical EU (<https://eu.infisical.com>) or a self-hosted/dedicated instance, you will need to set the appropriate value for this field.
 
 ### `export-type`
 
@@ -157,14 +158,15 @@ extra-headers: |
 
 When your Infisical instance uses an internal Certificate Authority (CA) that isn't trusted by default in GitHub Actions runners, you'll need to configure the action to recognize your custom CA certificate.
 
-
 ## Setup
 
 ### 1. Add your CA certificate to your repository
+
 - Save your CA certificate file (e.g., `ca-certificate.pem`) in your repository root or `.github/` directory
 - Ensure the certificate is in PEM format
 
 ### 2. Configure the GitHub Actions workflow to use it
+
 ```yaml
 jobs:
   your-job-name:
@@ -176,7 +178,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Setup Infisical Secrets
-        uses: Infisical/secrets-action@v1.0.12
+        uses: Infisical/secrets-action@v1.0.16
         with:
           method: "universal"
           domain: "https://<infisical instance url>"  # Your internal Infisical domain
